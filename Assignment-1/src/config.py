@@ -22,12 +22,12 @@ def parse_args():
     base = Path(__file__).resolve().parent
 
     parser = argparse.ArgumentParser(
-        description="Group 8 – perspective transformation (8DOF)"
+        description="perspective transformation 8DOF "
     )
     parser.add_argument(
         "--image",
         type=str,
-        default=str(base / "image" / "checkerboard_final.jpg"),
+        default=str(base / "images" / "checkerboard_final.jpg"),
         help="Path to the input image.",
     )
     parser.add_argument(
