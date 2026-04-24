@@ -21,8 +21,8 @@ import sys
 import cv2 as cv
 import numpy as np
 
-from config_io import MIN_CASES, build_default_cases, parse_args
-from homography_tools import compute_homography, project_points, warp_image_with_bounds
+from config import MIN_CASES, build_default_cases, parse_args
+from homography import compute_homography, project_points, warp_image_with_bounds
 from visualization_tools import side_by_side_result
 
 
