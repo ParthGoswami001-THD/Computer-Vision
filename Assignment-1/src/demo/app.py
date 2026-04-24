@@ -11,7 +11,8 @@
 # Created:     2026-04-25
 #-------------------------------------------------------------------------------
 
-
+import os
+import sys
 import threading
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
@@ -20,9 +21,10 @@ import cv2 as cv
 import numpy as np
 from PIL import Image, ImageTk
 
+# Add parent directory to path to import src modules
+sys.path.insert(0, os.path.dirname(__file__) + '/..')
 
-
-from homography import compute_homography_8dof, project_points, warp_image_numpy
+from homography import compute_homography_8points, compute_homography_8points, project_points, warp_image_numpy
 from visualization_tools import draw_points, side_by_side_result
 
 
@@ -184,7 +186,7 @@ class HomographyDemoApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Group 8 Perspective Transformation Demo")
-        self.root.geometry("1320x860")
+        self.root.geometry("1920x1080")
         self.root.minsize(1120, 720)
 
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -528,7 +530,7 @@ class HomographyDemoApp:
 
     def run_transformation_worker(self, src_points, dst_points):
         try:
-            H, A = compute_homography_8dof(src_points, dst_points)
+            H, A = compute_homography_8points(src_points, dst_points)
             output_size = (self.source_image.shape[0], self.source_image.shape[1])
             warped = warp_image_numpy(self.source_image, H, output_size)
 
@@ -642,7 +644,7 @@ class HomographyDemoApp:
             for idx in range(frame_count):
                 t = idx / (frame_count - 1)
                 dst_t = src_small + t * (dst_small - src_small)
-                H_t, _ = compute_homography_8dof(src_small, dst_t)
+                H_t, _ = compute_homography_8points(src_small, dst_t)
                 warped_t = warp_image_numpy(preview_image, H_t, preview_image.shape[:2])
                 target_marked = draw_points(warped_t, dst_t, "T")
                 frame = self.combine_for_animation(source_marked, target_marked, t)
