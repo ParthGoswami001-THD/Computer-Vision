@@ -1,5 +1,8 @@
 """
 config.py
+Command-line argument parsing and predefined test-case point configurations.
+
+Author: Dhruvi Vaishnav
 """
 
 import argparse
