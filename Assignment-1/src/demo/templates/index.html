@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Group 8 Homography Demo (Web)</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Group 8 Homography Demo App</h1>
+  </header>
+
+  <main class="layout">
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="tab-demo">Upload and Transform</button>
+      <button class="tab-btn" data-tab="tab-math">Math Calculation</button>
+      <button class="tab-btn" data-tab="tab-gallery">Saved Results</button>
+    </nav>
+
+    <section id="tab-demo" class="tab-panel active">
+      <div class="split">
+        <aside class="card controls">
+          <h2>Controls</h2>
+
+          <label class="upload-row">
+            <span>Upload Image</span>
+            <input id="uploadInput" type="file" accept=".jpg,.jpeg,.png,.bmp">
+          </label>
+
+          <div class="button-row">
+            <button id="openPickerBtn" type="button">Pick Source Points</button>
+            <button id="applyPointsBtn" type="button">Apply Manual Points</button>
+            <button id="runBtn" type="button">Run Transformation</button>
+            <button id="animateBtn" type="button">Animate Transformation</button>
+            <button id="saveBtn" type="button">Save Current Result</button>
+          </div>
+
+          <hr>
+
+          <div class="control-group">
+            <label for="presetSelect">Preset Case</label>
+            <select id="presetSelect"></select>
+            <button id="applyPresetBtn" type="button">Apply Preset</button>
+          </div>
+
+          <label class="checkbox-row">
+            <input id="relativeDst" type="checkbox" checked>
+            <span>Move destination with picked source points</span>
+          </label>
+          <p class="hint">Points are auto-sorted as TL, TR, BL, BR before calculation.</p>
+
+          <div class="point-editor">
+            <h3>Source Points S1..S4</h3>
+            <div id="srcEditor"></div>
+          </div>
+
+          <div class="point-editor">
+            <h3>Destination Points D1..D4</h3>
+            <div id="dstEditor"></div>
+          </div>
+
+          <h3>Status</h3>
+          <textarea id="statusBox" readonly></textarea>
+        </aside>
+
+        <section class="card preview-panel">
+          <h2>Result Preview</h2>
+          <div class="preview-wrap">
+            <img id="previewImage" alt="Preview">
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="tab-math" class="tab-panel">
+      <div class="card math-card">
+        <h2>Homography Calculation</h2>
+        <textarea id="mathBox" readonly></textarea>
+      </div>
+    </section>
+
+    <section id="tab-gallery" class="tab-panel">
+      <div class="split">
+        <aside class="card gallery-list-card">
+          <h2>Saved Images</h2>
+          <button id="refreshGalleryBtn" type="button">Refresh Gallery</button>
+          <ul id="galleryList" class="gallery-list"></ul>
+        </aside>
+
+        <section class="card gallery-preview-card">
+          <h2 id="galleryInfo">Select a saved result.</h2>
+          <div class="preview-wrap">
+            <img id="galleryImage" alt="Saved result preview">
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <div id="pickerModal" class="modal hidden" aria-hidden="true">
+    <div class="modal-content">
+      <h2>Pick 4 Source Points</h2>
+      <p>Click points in order: top-left, top-right, bottom-left, bottom-right.</p>
+      <p id="pickerStatus">Clicked: 0 / 4</p>
+      <canvas id="pickerCanvas"></canvas>
+      <div class="modal-actions">
+        <button id="pickerResetBtn" type="button">Reset</button>
+        <button id="pickerApplyBtn" type="button">Apply Points</button>
+        <button id="pickerCloseBtn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

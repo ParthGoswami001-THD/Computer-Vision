@@ -16,7 +16,7 @@
 - [Requirements & Installation](#requirements--installation)
 - [Usage](#usage)
   - [CLI](#command-line-interface-cli)
-  - [GUI](#interactive-gui-application)
+  - [Web App](#interactive-web-application)
 - [Core Modules](#core-modules)
 - [Test Cases](#test-cases)
 - [Output & Metrics](#output--metrics)
@@ -36,7 +36,7 @@
 | Algorithm | Direct Linear Transform (DLT) with Hartley normalization |
 | Error analysis | Reprojection error (mean & max) + condition number |
 | Visualization | Side-by-side annotated image comparison |
-| Interface | CLI batch runner + interactive Tkinter GUI |
+| Interface | CLI batch runner + interactive Flask web app |
 | Test cases | 6 predefined: scaling, rotation-like, trapezoid, shear, strong perspective, extreme skew |
 
 ---
@@ -51,7 +51,9 @@ Assignment-1/
 │   ├── config.py                  # CLI argument parsing and test case definitions
 │   ├── main.py                    # Command-line interface entry point
 │   ├── demo/
-│   │   └── app.py                 # Interactive GUI application (Tkinter)
+│   │   ├── app.py                 # Flask backend for interactive web app
+│   │   ├── templates/index.html   # Web UI template
+│   │   └── static/                # Web UI styles and JavaScript
 │   ├── images/                    # Input test images
 │   └── results/                   # Output transformation results
 ├── requirements.txt
@@ -65,7 +67,8 @@ Assignment-1/
 - Python 3.7+
 - `numpy` — numerical computations
 - `opencv-python` — image I/O and display
-- `pillow` — GUI image handling
+- `pillow` — image handling
+- `flask` — web server and API routes
 
 ```bash
 pip install -r requirements.txt
@@ -97,14 +100,16 @@ python src/main.py --show 0
 | `--cases` | int (min 6) | `6` | Number of test cases to run |
 | `--show` | `0` or `1` | `1` | Display result windows |
 
-### Interactive GUI Application
+### Interactive Web Application
 
 ```bash
 python src/demo/app.py
 ```
 
+Open in browser: `http://127.0.0.1:5000`
+
 <details>
-<summary>GUI Features (click to expand)</summary>
+<summary>Web App Features (click to expand)</summary>
 
 - **Load Image** — browse and select any input image
 - **Run Transform** — execute homography with the selected test case
@@ -175,9 +180,9 @@ Manages `argparse` configuration and defines all 6 test cases as named point-pai
 </details>
 
 <details>
-<summary><strong>demo/app.py</strong> — Tkinter GUI (click to expand)</summary>
+<summary><strong>demo/app.py</strong> — Flask web backend (click to expand)</summary>
 
-Interactive explorer with image loading, test case selection, animation, and live metrics.
+Interactive browser-based explorer with image loading, point picking, animation, and live metrics.
 
 </details>
 
@@ -291,7 +296,7 @@ Normalization dramatically improves the condition number of A and the numerical 
 
 | Role | Name |
 |---|---|
-| Homography implementation & GUI | Parth Goswami |
+| Homography implementation & web app | Parth Goswami |
 | Visualization & configuration | Dhruvi Vaishnav |
 
 **Group 8 — Academic Assignment**
